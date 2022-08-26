@@ -1,19 +1,19 @@
 class CountdownTimer {
-  constructor() {
+  constructor({targetDate, selector}) {
     this.refs = {
-      bodyRender: document.querySelector('#timer-1'),
+      bodyRender: document.querySelector(selector),
       sec: document.querySelector('[data-value="secs"]'),
       min: document.querySelector('[data-value="mins"]'),
       hour: document.querySelector('[data-value="hours"]'),
       day: document.querySelector('[data-value="days"]'),
     };
     
-    this.targetDate = new Date('Sep 1, 2021');
+    this.targetDateGiven = targetDate;
     this.id = null;
   }
   
   calc=()=> {
-    let time = this.targetDate - Date.now();
+    let time = this.targetDateGiven - Date.now();
     const days = Math.floor(time / (1000 * 60 * 60 * 24)).toString();
     const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString();
     const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)).toString();
@@ -25,23 +25,18 @@ class CountdownTimer {
     return { days, hours, mins, secs };   
 
   }
-
+  
   timerStart() {
-    this.targetDate = new Date('Sep 1, 2021');
     this.id = setInterval(this.calc, 1000);
   }
-  // init=()=> {
-  //   this.refs.bodyRender.addEventListener("DOMContentLoaded", newTimer.timerStart);
-  // }
+
 }
 
 const newTimer = new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Sep 1, 2021'),
+  targetDate: new Date('Sep 2, 2022'),
 });
 
 
 window.addEventListener("DOMContentLoaded", newTimer.timerStart);
 newTimer.timerStart();
-
-// newTimer.init();
